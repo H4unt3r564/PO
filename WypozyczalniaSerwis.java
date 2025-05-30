@@ -1,8 +1,6 @@
 import java.util.*;
 
 public class WypozyczalniaSerwis {
-    
-    public class WypozyczalniaSerwis {
 
     //singleton
     private static WypozyczalniaSerwis instancja;
