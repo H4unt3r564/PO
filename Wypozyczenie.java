@@ -61,7 +61,8 @@ public class Wypozyczenie{
         this.rower.czyDostepny = true;
     }
 
-    public String ToString(){ //wypisywanie wypozyczenia (testy)
+    @Override
+    public String toString(){ //wypisywanie wypozyczenia (testy)
         return "Wypożyczenie #" + wypozyczenieId +
            " | Rower: " + rower.rowerId +
            " | Od: " + stacjaStart +
