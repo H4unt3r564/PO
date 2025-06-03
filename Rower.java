@@ -46,6 +46,6 @@ public class Rower {
 
     @Override
     public String toString() {
-        return "Rower #" + rowerId + " | Typ: " + typ + " | Dostępny: " + (czyDostepny ? "Tak" : "Nie");
+        return "Rower #" + rowerId + " | Typ: " + typ + " | Dostepny: " + (czyDostepny ? "Tak" : "Nie");
     }
 }
