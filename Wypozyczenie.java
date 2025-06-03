@@ -63,13 +63,13 @@ public class Wypozyczenie{
 
     @Override
     public String toString(){ //wypisywanie wypozyczenia (testy)
-        return "Wypożyczenie #" + wypozyczenieId +
+        return "Wypozyczenie #" + wypozyczenieId +
            " | Rower: " + rower.rowerId +
            " | Od: " + stacjaStart +
            " | Do: " + stacjaKoniec +
            " | Start: " + czasStart +
            " | Koniec: " + czasKoniec +
-           " | Cena: " + cena + " zł";
+           " | Cena: " + cena + " zl";
     }
 
     public void cofnijCzasStart(int minutes) { //testowanie zmiana czasu
