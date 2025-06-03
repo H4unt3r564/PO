@@ -15,15 +15,23 @@ public class WypozyczalniaSerwis {
         }
         return instancja;
     }
+    
+    public List<Stacja> getStacje() {
+    return stacje;
+    }
 
-    public void wypozyczRower(Uzytkownik uzytkownik, Stacja stacja, Rower rower){
-        rower.zablokuj(); // nie wiem czy podaawac jaki rower
 
-        wypozyczenie wypozyczenie = new Wypozyczenie(rower, stacja, uzytkownik);
-        wypozyczenia.add(wypozyczenie);
+public boolean wypozyczRower(Uzytkownik uzytkownik, Stacja stacja, Rower rower){
+    if (!rower.isCzyDostepny()) {
+        System.out.println("Rower jest już wypożyczony, nie można go wypożyczyć.");
+        return false;
+    }
 
-        uzytkownik.dodajDoHistorii(wypozyczenie);
-
-        //zwrot to chuj wie jak zrobic loool, nie chce mi sie teraz kminic
+    rower.zablokuj();
+    Wypozyczenie wypozyczenie = new Wypozyczenie(rower, stacja, uzytkownik);
+    wypozyczenia.add(wypozyczenie);
+    uzytkownik.dodajDoHistorii(wypozyczenie);
+    return true;
     }
 }
+
