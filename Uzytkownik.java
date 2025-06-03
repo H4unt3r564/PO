@@ -74,10 +74,28 @@ public class Uzytkownik{
     public void wypozyczRower(Rower rower, Stacja stacja, WypozyczalniaSerwis serwis){
         serwis.wypozyczRower(this, stacja, rower);
     }
+
+
+    public Wypozyczenie getAktywneWypozyczenie() {
+        for (Wypozyczenie w : historia) {
+            if (w.getCzasKoniec() == null) {
+                return w;
+            }
+        }
+        return null;
+    }
+
     //zwrot
     public void zwrocRower(Stacja stacja, WypozyczalniaSerwis serwis) {
-        serwis.zwrocRower(this, stacja);
+        Wypozyczenie aktywne = getAktywneWypozyczenie();
+        if (aktywne != null) {
+            Rower rower = aktywne.getRower();
+            serwis.zwrocRower(this, stacja, rower);
+        } else {
+            System.out.println("Brak aktywnego wypożyczenia.");
+        }
     }
+
 
     public void dodajDoHistorii(Wypozyczenie wypozyczenie) {
         historia.add(wypozyczenie);

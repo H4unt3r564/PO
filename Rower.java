@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Rower {
-    private int rowerId;
-    private RowerTyp typ;
-    private boolean czyDostepny;
+    public int rowerId;
+    public RowerTyp typ;
+    public boolean czyDostepny;
     private static int counter = 1;
 
     public Rower(RowerTyp typ, boolean czyDostepny) {

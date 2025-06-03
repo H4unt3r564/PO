@@ -7,12 +7,25 @@ public class Wypozyczenie{
 
     private int wypozyczenieId;
     private Rower rower;
+    // private String rower;
+    // private Uzytkownik uzytkownik;
     private Uzytkownik uzytkownik;
+    // private Stacja stacjaStart;
     private Stacja stacjaStart;
     private Stacja stacjaKoniec;
+    // private String stacjaKoniec;
     private Date czasStart;
     private Date czasKoniec;
     private double cena;
+
+    // public Wypozyczenie(Rower rowerWypozyczenie, Stacja stacjaStartWypozyczenie, Uzytkownik uzytkownikWypozyczenie){
+    //     this.wypozyczenieId = counter++;
+    //     this.rower = rowerWypozyczenie;
+    //     this.stacjaStart = stacjaStartWypozyczenie;
+    //     this.uzytkownik = uzytkownikWypozyczenie;
+    //     this.czasStart = new Date();
+    //     this.cena = 0.0;
+    // }
 
     public Wypozyczenie(Rower rowerWypozyczenie, Stacja stacjaStartWypozyczenie, Uzytkownik uzytkownikWypozyczenie){
         this.wypozyczenieId = counter++;
@@ -23,7 +36,6 @@ public class Wypozyczenie{
         this.cena = 0.0;
     }
 
-    
     public double obliczanieCeny(){
         long czasWMilisekundach = (this.czasKoniec.getTime() - this.czasStart.getTime());
         long czasWMinutach = TimeUnit.MILLISECONDS.toMinutes(czasWMilisekundach);
@@ -41,22 +53,21 @@ public class Wypozyczenie{
         // return czasWMinutach * 5.0;
     }
 
-    public void zakonczWypozyczenie(Stacja stacjaKoncowa){
+    public void ZakonczWypozyczenie(Stacja stacjaKoncowa){
         this.stacjaKoniec = stacjaKoncowa;
         this.czasKoniec = new Date();
         this.cena = obliczanieCeny();
-        this.rower.czyDostepny = true;
     }
 
     @Override
     public String toString(){ //wypisywanie wypozyczenia (testy)
-        return "Wypożyczenie #" + wypozyczenieId +
+        return "Wypozyczenie #" + wypozyczenieId +
            " | Rower: " + rower.rowerId +
-           " | Od: " + stacjaStart.getLokalizacja() +
-           " | Do: " + stacjaKoniec.getLokalizacja() +
+           " | Od: " + stacjaStart +
+           " | Do: " + stacjaKoniec +
            " | Start: " + czasStart +
            " | Koniec: " + czasKoniec +
-           " | Cena: " + cena + " zł";
+           " | Cena: " + cena + " zl";
     }
 
     public void cofnijCzasStart(int minutes) { //testowanie zmiana czasu
@@ -66,5 +77,18 @@ public class Wypozyczenie{
         this.czasStart = cal.getTime();
     }
 
+    //Gettery
+    public Uzytkownik getUzytkownik() {
+        return uzytkownik;
+    }
+
+    public Rower getRower() {
+        return rower;
+    }
+
+    public Date getCzasKoniec() {
+        return czasKoniec;
+    }
 
 }
+
