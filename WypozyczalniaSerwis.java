@@ -21,17 +21,17 @@ public class WypozyczalniaSerwis {
     }
 
 
-public boolean wypozyczRower(Uzytkownik uzytkownik, Stacja stacja, Rower rower){
-    if (!rower.isCzyDostepny()) {
-        System.out.println("Rower jest już wypożyczony, nie można go wypożyczyć.");
-        return false;
-    }
-
-    rower.zablokuj();
-    Wypozyczenie wypozyczenie = new Wypozyczenie(rower, stacja, uzytkownik);
-    wypozyczenia.add(wypozyczenie);
-    uzytkownik.dodajDoHistorii(wypozyczenie);
-    return true;
-    }
+    public boolean wypozyczRower(Uzytkownik uzytkownik, Stacja stacja, Rower rower){
+        if (!rower.isCzyDostepny()) {
+            System.out.println("Rower jest już wypożyczony, nie można go wypożyczyć.");
+            return false;
+        }
+    
+        rower.zablokuj();
+        Wypozyczenie wypozyczenie = new Wypozyczenie(rower, stacja, uzytkownik);
+        wypozyczenia.add(wypozyczenie);
+        uzytkownik.dodajDoHistorii(wypozyczenie);
+        return true;
+        }
 }
 
