@@ -83,7 +83,7 @@ public class Main {
                     }
                     List<Rower> dostepneRowery = wybranaStacja.pobierzDostepneRowery();
                     if (dostepneRowery.isEmpty()){
-                        System.out.println("Brak dostepnych rowerww w stacji");
+                        System.out.println("Brak dostepnych rowerow w stacji");
                         break;
                     }
                     System.out.println("Dostepne rowery:");
@@ -129,8 +129,69 @@ public class Main {
                     break;
                                     
                 case 4:
-                //zwracanie roweru
-                    zalogowany.zwrocRower(stacja3, serwis2);
+                    // zwracanie wybranych rowerów
+                    List<Wypozyczenie> aktywne = new ArrayList<>();
+                    for (Wypozyczenie w : zalogowany.getHistoria()) {
+                        if (w.getCzasKoniec() == null) {
+                            aktywne.add(w);
+                        }
+                    }
+
+                    if (aktywne.isEmpty()) {
+                        System.out.println("Brak aktywnych wypożyczeń.");
+                        break;
+                    }
+
+                    System.out.println("Aktywne wypożyczenia:");
+                    for (Wypozyczenie w : aktywne) {
+                        System.out.println("ID: " + w.getRower().getRowerId() + " | Typ: " + w.getRower().getTyp() + " | Stacja początkowa: " + w.getStacjaPoczatkowa().getLokalizacja());
+                    }
+
+                    System.out.println("Podaj ID rowerów do zwrotu (oddzielone przecinkami):");
+                    String[] doZwrotu = skaner.nextLine().split(",");
+
+                    System.out.println("Wybierz stację zwrotu:");
+                    for (Stacja s : serwis.getStacje()) {
+                        System.out.println(s.getLokalizacja());
+                    }
+
+                    String lokalizacjaZwrotu = skaner.nextLine();
+                    Stacja stacjaZwrotu = null;
+                    for (Stacja s : serwis.getStacje()) {
+                        if (s.getLokalizacja().equalsIgnoreCase(lokalizacjaZwrotu)) {
+                            stacjaZwrotu = s;
+                            break;
+                        }
+                    }
+
+                    if (stacjaZwrotu == null) {
+                        System.out.println("Nie znaleziono stacji o podanej lokalizacji.");
+                        break;
+                    }
+
+                    for (String idStr : doZwrotu) {
+                        try {
+                            int id = Integer.parseInt(idStr.trim());
+                            // reczne wyszukiwanie konkretnego aktywnego wypozyczenia po rowerId
+                            Wypozyczenie doZwrotuW = null;
+                            for (Wypozyczenie w : aktywne) {
+                                if (w.getRower().getRowerId() == id) {
+                                    doZwrotuW = w;
+                                    break;
+                                }
+                            }
+
+                            if (doZwrotuW != null) {
+                                serwis.zwrocRower(zalogowany, stacjaZwrotu, doZwrotuW.getRower());
+                                System.out.println("Zwrócono rower ID: " + id);
+                            } else {
+                                System.out.println("Nie masz aktywnego wypożyczenia z rowerem ID: " + id);
+                            }
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Nieprawidłowy format ID: " + idStr);
+                        }
+                    }
                     break;
                 case 5:
                 //wypisywanie historii
