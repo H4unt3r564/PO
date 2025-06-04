@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class WypozyczalniaSerwis {
@@ -70,5 +73,85 @@ public class WypozyczalniaSerwis {
         }
         System.out.println("Nie znaleziono aktywnego wypożyczenia dla podanego roweru i użytkownika.");
     }
+    
+    public void zaladujDanePoczatkowe() {
+        zaladujStacje();
+        zaladujRowery();
+        zaladujUzytkownikow();
+    }
+
+    private void zaladujStacje() {
+        try (BufferedReader br = new BufferedReader(new FileReader("stacje.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                stacje.add(new Stacja(line.trim()));
+            }
+        } catch (IOException e) {
+            // Domyślne stacje jeśli plik nie istnieje
+            stacje.add(new Stacja("Centrum"));
+            stacje.add(new Stacja("Dworzec Główny"));
+            stacje.add(new Stacja("Park Miejski"));
+        }
+    }
+
+    private void zaladujRowery() {
+        try (BufferedReader br = new BufferedReader(new FileReader("rowery.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3) {
+                    int stacjaId = Integer.parseInt(parts[0].trim());
+                    RowerTyp typ = RowerTyp.valueOf(parts[1].trim().toUpperCase());
+                    boolean dostepny = Boolean.parseBoolean(parts[2].trim());
+                    
+                    Rower rower = new Rower(typ, dostepny);
+                    Stacja stacja = znajdzStacjePoId(stacjaId);
+                    if (stacja != null) {
+                        stacja.dodanieRoweru(rower);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            // Domyślne rowery jeśli plik nie istnieje
+            if (!stacje.isEmpty()) {
+                stacje.get(0).dodanieRoweru(new Rower(RowerTyp.STANDARD, true));
+                stacje.get(0).dodanieRoweru(new Rower(RowerTyp.ELEKTRYCZNY, true));
+                stacje.get(1).dodanieRoweru(new Rower(RowerTyp.STANDARD, true));
+                stacje.get(1).dodanieRoweru(new Rower(RowerTyp.CARGO, true));
+            }
+        }
+    }
+
+    private void zaladujUzytkownikow() {
+        try (BufferedReader br = new BufferedReader(new FileReader("uzytkownicy.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 5) {
+                    int userId = Integer.parseInt(parts[0].trim());
+                    String imie = parts[1].trim();
+                    String nazwisko = parts[2].trim();
+                    String email = parts[3].trim();
+                    String haslo = parts[4].trim();
+                    
+                    uzytkownicy.add(new Uzytkownik(userId, imie, nazwisko, email, haslo));
+                }
+            }
+        } catch (IOException e) {
+            // Domyślny użytkownik jeśli plik nie istnieje
+            uzytkownicy.add(new Uzytkownik(1, "Jan", "Kowalski", "jan@kowalski.pl", "haslo123"));
+        }
+    }
+
+    private Stacja znajdzStacjePoId(int stacjaId) {
+        for (Stacja s : stacje) {
+            if (s.getStacjaId() == stacjaId) {
+                return s;
+            }
+        }
+        return null;
+    }
 }
+
+
 

@@ -1,0 +1,8 @@
+1,STANDARD,true
+1,ELEKTRYCZNY,true
+1,CARGO,false
+2,STANDARD,true
+2,STANDARD,true
+3,ELEKTRYCZNY,true
+4,CARGO,true
+5,STANDARD,true
