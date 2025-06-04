@@ -7,6 +7,7 @@ public class WypozyczalniaSerwis {
         
     private List<Stacja> stacje = new ArrayList<>();
     private List<Wypozyczenie> wypozyczenia = new ArrayList<>();
+    private List<Uzytkownik> uzytkownicy = new ArrayList<>(); //lista uzytkownikow potrzebna do logowania (aby leciec po liscie tak jak w zwrocRower)
         
     private WypozyczalniaSerwis() {}
     public static WypozyczalniaSerwis getInstance() {
@@ -16,6 +17,22 @@ public class WypozyczalniaSerwis {
         return instancja;
     }
     
+    //dodanie usera do listy userow
+    public void dodajUzytkownika(Uzytkownik user){
+        uzytkownicy.add(user);
+    }
+
+    public Uzytkownik zaloguj(String email, String haslo){
+        for (Uzytkownik u : uzytkownicy) {
+            if(email.equals(u.getEmail()) && haslo.equals(u.getHaslo())){
+                System.out.println("Pomyslnie zalogowano!");
+                return u;
+            }
+        }
+        System.out.println("Nie udalo sie zalogowac. Sprobuj ponownie.");
+        return null;
+    }
+
     public List<Stacja> getStacje() {
         return stacje;
     }
