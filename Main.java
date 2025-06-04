@@ -87,6 +87,7 @@ public class Main {
             System.out.println("0 - wyjdz");
 
             opcja = skaner.nextInt();
+            skaner.nextLine(); //usuwa znak nowej linii
             switch(opcja){
                 case 1:
                     for (Stacja s: serwis.getStacje()){
@@ -100,9 +101,54 @@ public class Main {
                     }
                     break;
                 case 3:
-                //wypozyczanie roweru. trzeba bedzie zrobic ze wybiera sobie jaki rower z jakiej stacji
-                    zalogowany.wypozyczRower(rower1, stacja3, serwis2);
+                //wypozyczanie roweru. trzeba bedzie zrobic ze wybiera sobie jaki rower z jakiej stacji // zrobione
+                    System.out.println("Wybierz stacje (podaj lokalizacje):");
+                    for (Stacja s : serwis.getStacje()) {
+                        System.out.println(s.getLokalizacja()); 
+                    }
+
+                    Stacja wybranaStacja = null;
+                    String stacjaWybor = skaner.nextLine();
+                    for (Stacja s : serwis.getStacje()) {
+                        if (s.getLokalizacja().equalsIgnoreCase(stacjaWybor)) {
+                            wybranaStacja = s;
+                            break; 
+                            }
+                        }
+
+                    if (wybranaStacja == null) {
+                        System.out.println("Nie znaleziono stacji o podanej lokalizacji.");
+                        break;
+                    }
+                    List<Rower> dostepneRowery = wybranaStacja.pobierzDostepneRowery();
+                    if (dostepneRowery.isEmpty()){
+                        System.out.println("Brak dostepnych rowerww w stacji");
+                        break;
+                    }
+                    System.out.println("Dostepne rowery:");
+                     for (Rower r : dostepneRowery) {
+                        System.out.println("ID: " + r.getRowerId() + " | Typ: " + r.getTyp());
+                    }
+                    System.out.println("Podaj ID roweru, który chcesz wypozyczyc:");
+                    int idRoweru = Integer.parseInt(skaner.nextLine());
+                    Rower wybranyRower = null;
+
+                    for (Rower r : dostepneRowery) {
+                        if (r.getRowerId() == idRoweru) {
+                            wybranyRower = r;
+                            break;
+                        }
+                    }
+
+                    if (wybranyRower == null) {
+                        System.out.println("Nie znaleziono roweru o podanym ID.");
+                        break;
+                    }
+
+                    serwis.wypozyczRower(zalogowany, wybranaStacja, wybranyRower);
+                    System.out.println("Wypozyczyles rower o ID: " + wybranyRower.getRowerId());
                     break;
+                                    
                 case 4:
                 //zwracanie roweru
                     zalogowany.zwrocRower(stacja3, serwis2);
