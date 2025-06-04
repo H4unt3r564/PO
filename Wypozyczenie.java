@@ -7,6 +7,7 @@ public class Wypozyczenie{
 
     private int wypozyczenieId;
     private Rower rower;
+    // private List<Rower> rowery;
     // private String rower;
     // private Uzytkownik uzytkownik;
     private Uzytkownik uzytkownik;
@@ -62,11 +63,11 @@ public class Wypozyczenie{
     @Override
     public String toString(){ //wypisywanie wypozyczenia (testy)
         return "Wypozyczenie #" + wypozyczenieId +
-           " | Rower: " + rower.rowerId +
-           " | Od: " + stacjaStart +
-           " | Do: " + stacjaKoniec +
+           " | Rower: " + rower.rowerId + " | Typ: " + rower.typ + 
+           " | Od: " + stacjaStart.getLokalizacja() +
+           " | Do: " + (stacjaKoniec != null ? stacjaKoniec.getLokalizacja() : "BRAK") +
            " | Start: " + czasStart +
-           " | Koniec: " + czasKoniec +
+           " | Koniec: " + (czasKoniec != null ? czasKoniec : "BRAK") +
            " | Cena: " + cena + " zl";
     }
 
@@ -88,6 +89,10 @@ public class Wypozyczenie{
 
     public Date getCzasKoniec() {
         return czasKoniec;
+    }
+
+    public Stacja getStacjaPoczatkowa(){
+        return stacjaStart;
     }
 
 }
