@@ -9,55 +9,16 @@ public class Main {
         
         Stacja stacja1 = new Stacja("dupa");
         Rower rower1 = new Rower(RowerTyp.STANDARD, true);
+        Rower rower2 = new Rower(RowerTyp.STANDARD, true);
         stacja1.dodanieRoweru(rower1);
+        stacja1.dodanieRoweru(rower2);
         Stacja stacja2 = new Stacja("dupa2");
         Stacja stacja3 = new Stacja("dupa3");
-        
-        // stacja2.pobierzDostepneRowery();
-        
-        Uzytkownik user = new Uzytkownik(1, "Jan", "Kowalski", "e@d.c", "lol");
-
-        
+    
         serwis.getStacje().add(stacja1);
         serwis.getStacje().add(stacja2);
         serwis.getStacje().add(stacja3);
-        
-        System.out.println("Dostepne stacje:");
-        for (Stacja s : serwis.getStacje()) {
-            System.out.println(s);
-        }
-        
-        System.out.println("Dostepne rowery STACJA 2:");
-        for (Rower r : stacja2.pobierzDostepneRowery()) {
-            System.out.println(r);
-        }
-
-        System.out.println("Dostepne rowery STACJA 1:");
-        for (Rower r : stacja1.pobierzDostepneRowery()) {
-            System.out.println(r);
-        }
-
-        
-        user.wypozyczRower(rower1, stacja1, serwis);
-
-       
-        user.getHistoria().get(0).cofnijCzasStart(30);
-
-       
-        // user.getHistoria().get(0).ZakonczWypozyczenie(stacja1);
-
-        
-        System.out.println("\nHistoria:");
-        for (Wypozyczenie w : user.getHistoria()) {
-            System.out.println(w);
-        }
-
-        user.zwrocRower(stacja2, serwis);
-
-        System.out.println("\nHistoria:");
-        for (Wypozyczenie w : user.getHistoria()) {
-            System.out.println(w);
-        }
+    
 
         //"nowy" od testow i dodanie do listy uzytkownikow 
         Uzytkownik nowy = new Uzytkownik(0, "juan", "pablo", "a@b.c", "1234");
@@ -129,24 +90,42 @@ public class Main {
                      for (Rower r : dostepneRowery) {
                         System.out.println("ID: " + r.getRowerId() + " | Typ: " + r.getTyp());
                     }
-                    System.out.println("Podaj ID roweru, który chcesz wypozyczyc:");
-                    int idRoweru = Integer.parseInt(skaner.nextLine());
-                    Rower wybranyRower = null;
+                    System.out.println("Podaj ID rowerów do wypozyczenia (oddzielone przecinkami, np. 1,3,4):");
+                    String[] idWprowadzone = skaner.nextLine().split(",");
+                    List<Rower> wypozyczone = new ArrayList<>();
 
-                    for (Rower r : dostepneRowery) {
-                        if (r.getRowerId() == idRoweru) {
-                            wybranyRower = r;
-                            break;
+                    for (String idStr : idWprowadzone) {
+                        try {
+                            int idRoweru = Integer.parseInt(idStr.trim());
+                            Rower wybranyRower = null;
+                            for (Rower r : dostepneRowery) {
+                                if (r.getRowerId() == idRoweru) {
+                                    wybranyRower = r;
+                                    break;
+                                }
+                            }
+
+                            if (wybranyRower != null) {
+                                serwis.wypozyczRower(zalogowany, wybranaStacja, wybranyRower);
+                                wypozyczone.add(wybranyRower);
+                            } else {
+                                System.out.println("Rower o ID " + idRoweru + " nie istnieje lub jest niedostepny.");
+                            }
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Nieprawidlowy format ID: " + idStr);
                         }
                     }
 
-                    if (wybranyRower == null) {
-                        System.out.println("Nie znaleziono roweru o podanym ID.");
-                        break;
+                    if (!wypozyczone.isEmpty()) {
+                        System.out.println("Wypozyczyles nastepujace rowery:");
+                        for (Rower r : wypozyczone) {
+                            System.out.println("ID: " + r.getRowerId() + " | Typ: " + r.getTyp());
+                        }
+                    } else {
+                        System.out.println("Nie wypozyczono zadnych rowerow.");
                     }
 
-                    serwis.wypozyczRower(zalogowany, wybranaStacja, wybranyRower);
-                    System.out.println("Wypozyczyles rower o ID: " + wybranyRower.getRowerId());
                     break;
                                     
                 case 4:
