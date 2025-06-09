@@ -7,26 +7,12 @@ public class Wypozyczenie{
 
     private int wypozyczenieId;
     private Rower rower;
-    // private List<Rower> rowery;
-    // private String rower;
-    // private Uzytkownik uzytkownik;
     private Uzytkownik uzytkownik;
-    // private Stacja stacjaStart;
     private Stacja stacjaStart;
     private Stacja stacjaKoniec;
-    // private String stacjaKoniec;
     private Date czasStart;
     private Date czasKoniec;
     private double cena;
-
-    // public Wypozyczenie(Rower rowerWypozyczenie, Stacja stacjaStartWypozyczenie, Uzytkownik uzytkownikWypozyczenie){
-    //     this.wypozyczenieId = counter++;
-    //     this.rower = rowerWypozyczenie;
-    //     this.stacjaStart = stacjaStartWypozyczenie;
-    //     this.uzytkownik = uzytkownikWypozyczenie;
-    //     this.czasStart = new Date();
-    //     this.cena = 0.0;
-    // }
 
     public Wypozyczenie(Rower rowerWypozyczenie, Stacja stacjaStartWypozyczenie, Uzytkownik uzytkownikWypozyczenie){
         this.wypozyczenieId = counter++;
@@ -51,7 +37,6 @@ public class Wypozyczenie{
                 return czasWMinutach * 2.0;
         }
         
-        // return czasWMinutach * 5.0;
     }
 
     public void ZakonczWypozyczenie(Stacja stacjaKoncowa){
