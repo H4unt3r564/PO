@@ -44,5 +44,13 @@ Lista wymaganych plików:
 	"Java Main" w celu uruchomienia programu
 
 Program powinien wystartować i wczytać dane z plików tekstowych, a następnie powinien pojawić się proces logowania.
-
-
+Aby się zalogować plik "użytkownicy.txt" zawiera dane 3 przykładowych użytkowników:
+Pierwszy:
+- EMAIL: jan@example.com 
+- HASLO: haslo123
+Drugi:
+- EMAIL: anna@example.com 
+- HASLO: password456
+Trzeci:
+- EMAIL: piotr@example.com 
+- HASLO: qwerty789
