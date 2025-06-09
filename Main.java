@@ -199,12 +199,53 @@ public class Main {
                     zalogowany.wypisanieHistorii();
                     break;
                 case 6:
-                // przeskoczenie czasu (testowanie)
-                //pobiera ostatnie nieskonczone wypozyczenie i przesuwa czas o godzine do przodu (czyli ostatnie w liscie)
-                // if sprawdza czy historia jest pusta czy nie (moze sie wykrzaczyc)
-                    if(!zalogowany.getHistoria().isEmpty()){
-                        Wypozyczenie ostatnie = zalogowany.getHistoria().get(zalogowany.getHistoria().size() - 1);
-                        ostatnie.cofnijCzasStart(60);
+                    // Znajdź wszystkie aktywne wypożyczenia użytkownika (używam innej nazwy zmiennej)
+                    List<Wypozyczenie> aktualneWypozyczenia = new ArrayList<>();
+                    for (Wypozyczenie w : zalogowany.getHistoria()) {
+                        if (w.getCzasKoniec() == null) {
+                            aktualneWypozyczenia.add(w);
+                        }
+                    }
+
+                    if (aktualneWypozyczenia.isEmpty()) {
+                        System.out.println("Brak aktywnych wypożyczeń.");
+                        break;
+                    }
+
+                    System.out.println("Twoje aktywne wypożyczenia:");
+                    for (Wypozyczenie w : aktualneWypozyczenia) {
+                        System.out.println("ID roweru: " + w.getRower().getRowerId() + 
+                                        " | Typ: " + w.getRower().getTyp());
+                    }
+
+                    System.out.println("Podaj ID rowerów do przesunięcia czasu (oddzielone przecinkami):");
+                    String[] idRowery = skaner.nextLine().split(",");
+                    
+                    System.out.println("Podaj liczbę minut do przesunięcia:");
+                    int minuty = skaner.nextInt();
+                    skaner.nextLine(); // Czyścimy bufor
+
+                    for (String idStr : idRowery) {
+                        try {
+                            int idRoweru = Integer.parseInt(idStr.trim());
+                            boolean znaleziono = false;
+                            
+                            // Szukamy wypożyczenia dla podanego ID roweru
+                            for (Wypozyczenie w : aktualneWypozyczenia) {
+                                if (w.getRower().getRowerId() == idRoweru) {
+                                    w.cofnijCzasStart(minuty);
+                                    System.out.println("Przesunięto czas dla roweru ID: " + idRoweru);
+                                    znaleziono = true;
+                                    break;
+                                }
+                            }
+                            
+                            if (!znaleziono) {
+                                System.out.println("Nie masz aktywnego wypożyczenia z rowerem ID: " + idRoweru);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Nieprawidłowy format ID: " + idStr);
+                        }
                     }
                     break;
                 case 0:
