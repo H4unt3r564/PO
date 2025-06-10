@@ -1,0 +1,116 @@
+
+Dokumentacja API – System Wypożyczalni Rowerów
+==============================================
+
+1. Klasa WypozyczalniaSerwis (Singleton)
+----------------------------------------
+Opis:
+Główny komponent zarządzający całą wypożyczalnią – obsługuje logikę użytkowników, stacji i wypożyczeń.
+
+Metody publiczne:
+- getInstance()
+  Parametry: brak
+  Zwraca: WypozyczalniaSerwis
+  Opis: Zwraca instancję singletona serwisu.
+
+- dodajUzytkownika(Uzytkownik user)
+  Parametry: user – użytkownik
+  Zwraca: void
+  Opis: Rejestruje nowego użytkownika.
+
+- zaloguj(String email, String haslo)
+  Parametry: email, hasło
+  Zwraca: Uzytkownik lub null
+  Opis: Loguje użytkownika po danych.
+
+- getStacje()
+  Parametry: brak
+  Zwraca: List<Stacja>
+  Opis: Zwraca wszystkie stacje w systemie.
+
+- wypozyczRower(Uzytkownik u, Stacja s, Rower r)
+  Parametry: użytkownik, stacja, rower
+  Zwraca: void
+  Opis: Rozpoczyna wypożyczenie.
+
+- zwrocRower(Uzytkownik u, Stacja s, Rower r)
+  Parametry: użytkownik, stacja, rower
+  Zwraca: void
+  Opis: Kończy wypożyczenie i rozlicza je.
+
+2. Klasa Uzytkownik
+-------------------
+Atrybuty:
+- userId : int – unikalny identyfikator
+- imie, nazwisko, email, haslo : String – dane osobowe
+- historia : List<Wypozyczenie> – historia wypożyczeń
+
+Metody publiczne:
+- wypozyczRower(Rower r, Stacja s, WypozyczalniaSerwis srv)
+  Parametry: rower, stacja, serwis
+  Zwraca: void
+  Opis: Inicjuje wypożyczenie.
+
+- zwrocRower(Stacja s, WypozyczalniaSerwis srv)
+  Parametry: stacja, serwis
+  Zwraca: void
+  Opis: Zwraca rower do stacji.
+
+- getAktywneWypozyczenie()
+  Parametry: brak
+  Zwraca: Wypozyczenie lub null
+  Opis: Zwraca aktywne wypożyczenie użytkownika.
+
+- wypisanieHistorii()
+  Parametry: brak
+  Zwraca: void
+  Opis: Wypisuje historię wypożyczeń.
+
+- dodajDoHistorii(Wypozyczenie w)
+  Parametry: wypożyczenie
+  Zwraca: void
+  Opis: Dodaje wypożyczenie do historii.
+
+3. Klasa Wypozyczenie
+---------------------
+Atrybuty:
+- wypozyczenieId : int – unikalne ID wypożyczenia
+- rower : Rower – wypożyczony rower
+- uzytkownik : Uzytkownik – wypożyczający
+- stacjaStart : Stacja – stacja początkowa
+- stacjaKoniec : Stacja – stacja końcowa
+- czasStart, czasKoniec : Date – czas rozpoczęcia i zakończenia
+- cena : double – cena wypożyczenia
+
+Metody publiczne:
+- obliczanieCeny()
+  Parametry: brak
+  Zwraca: double
+  Opis: Oblicza cenę wypożyczenia na podstawie czasu i typu roweru.
+
+- ZakonczWypozyczenie(Stacja stacjaKoncowa)
+  Parametry: stacja końcowa
+  Zwraca: void
+  Opis: Kończy wypożyczenie, ustawia czas i stację końcową oraz cenę.
+
+- cofnijCzasStart(int minutes)
+  Parametry: liczba minut
+  Zwraca: void
+  Opis: Cofnięcie czasu startu (do testów).
+
+- getUzytkownik(), getRower(), getCzasKoniec()
+  Parametry: brak
+  Zwraca: odpowiednie wartości
+  Opis: Gettery do podstawowych atrybutów.
+
+- toString()
+  Parametry: brak
+  Zwraca: String
+  Opis: Tekstowa reprezentacja wypożyczenia.
+
+---
+Komunikacja między komponentami:
+- Uzytkownik inicjuje wypożyczenie i zwrot poprzez wywołania metod serwisu WypozyczalniaSerwis.
+- Serwis zarządza dostępnością rowerów, rejestruje wypożyczenia i zwroty.
+- Wypozyczenie przechowuje szczegóły pojedynczego wypożyczenia oraz oblicza koszt.
+- Historia wypożyczeń jest przechowywana w obiekcie Uzytkownik.
