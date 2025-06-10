@@ -139,13 +139,13 @@ public class Main {
                     }
 
                     if (aktywne.isEmpty()) {
-                        System.out.println("Brak aktywnych wypożyczeń.");
+                        System.out.println("Brak aktywnych wypozyczen.");
                         break;
                     }
 
-                    System.out.println("Aktywne wypożyczenia:");
+                    System.out.println("Aktywne wypozyczenia:");
                     for (Wypozyczenie w : aktywne) {
-                        System.out.println("ID: " + w.getRower().getRowerId() + " | Typ: " + w.getRower().getTyp() + " | Stacja początkowa: " + w.getStacjaPoczatkowa().getLokalizacja());
+                        System.out.println("ID: " + w.getRower().getRowerId() + " | Typ: " + w.getRower().getTyp() + " | Stacja poczatkowa: " + w.getStacjaPoczatkowa().getLokalizacja());
                     }
 
                     System.out.println("Podaj ID rowerów do zwrotu (oddzielone przecinkami):");
@@ -186,11 +186,11 @@ public class Main {
                                 serwis.zwrocRower(zalogowany, stacjaZwrotu, doZwrotuW.getRower());
                                 System.out.println("Zwrócono rower ID: " + id);
                             } else {
-                                System.out.println("Nie masz aktywnego wypożyczenia z rowerem ID: " + id);
+                                System.out.println("Nie masz aktywnego wypozyczenia z rowerem ID: " + id);
                             }
 
                         } catch (NumberFormatException e) {
-                            System.out.println("Nieprawidłowy format ID: " + idStr);
+                            System.out.println("Nieprawidlowy format ID: " + idStr);
                         }
                     }
                     break;
@@ -208,11 +208,11 @@ public class Main {
                     }
 
                     if (aktualneWypozyczenia.isEmpty()) {
-                        System.out.println("Brak aktywnych wypożyczeń.");
+                        System.out.println("Brak aktywnych wypozyczen.");
                         break;
                     }
 
-                    System.out.println("Twoje aktywne wypożyczenia:");
+                    System.out.println("Twoje aktywne wypozyczenia:");
                     for (Wypozyczenie w : aktualneWypozyczenia) {
                         System.out.println("ID roweru: " + w.getRower().getRowerId() + 
                                         " | Typ: " + w.getRower().getTyp());
@@ -221,7 +221,7 @@ public class Main {
                     System.out.println("Podaj ID rowerów do przesunięcia czasu (oddzielone przecinkami):");
                     String[] idRowery = skaner.nextLine().split(",");
                     
-                    System.out.println("Podaj liczbę minut do przesunięcia:");
+                    System.out.println("Podaj liczbe minut do przesuniecia:");
                     int minuty = skaner.nextInt();
                     skaner.nextLine(); // Czyścimy bufor
 
@@ -234,17 +234,17 @@ public class Main {
                             for (Wypozyczenie w : aktualneWypozyczenia) {
                                 if (w.getRower().getRowerId() == idRoweru) {
                                     w.cofnijCzasStart(minuty);
-                                    System.out.println("Przesunięto czas dla roweru ID: " + idRoweru);
+                                    System.out.println("Przesunieto czas dla roweru ID: " + idRoweru);
                                     znaleziono = true;
                                     break;
                                 }
                             }
                             
                             if (!znaleziono) {
-                                System.out.println("Nie masz aktywnego wypożyczenia z rowerem ID: " + idRoweru);
+                                System.out.println("Nie masz aktywnego wypozyczenia z rowerem ID: " + idRoweru);
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println("Nieprawidłowy format ID: " + idStr);
+                            System.out.println("Nieprawidlowy format ID: " + idStr);
                         }
                     }
                     break;
