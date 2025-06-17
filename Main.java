@@ -7,23 +7,7 @@ public class Main {
         WypozyczalniaSerwis serwis = WypozyczalniaSerwis.getInstance();
         WypozyczalniaSerwis serwis2 = WypozyczalniaSerwis.getInstance();
         serwis.zaladujDanePoczatkowe();
-        
-        // Stacja stacja1 = new Stacja("dupa");
-        // Rower rower1 = new Rower(RowerTyp.STANDARD, true);
-        // Rower rower2 = new Rower(RowerTyp.STANDARD, true);
-        // stacja1.dodanieRoweru(rower1);
-        // stacja1.dodanieRoweru(rower2);
-        // Stacja stacja2 = new Stacja("dupa2");
-        // Stacja stacja3 = new Stacja("dupa3");
-    
-        // serwis.getStacje().add(stacja1);
-        // serwis.getStacje().add(stacja2);
-        // serwis.getStacje().add(stacja3);
-    
 
-        //"nowy" od testow i dodanie do listy uzytkownikow 
-        // Uzytkownik nowy = new Uzytkownik(0, "juan", "pablo", "a@b.c", "1234");
-        // serwis.dodajUzytkownika(nowy);
         //skaner do pobierania z kalwiatury maila i hasla, czyZalogowany puste bo while nie dziala bez pustej zmiennej
         Scanner skaner = new Scanner(System.in);
         Uzytkownik zalogowany;
