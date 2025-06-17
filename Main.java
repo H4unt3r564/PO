@@ -59,7 +59,7 @@ public class Main {
                 case 2:
                 // narazie tak zostawie ale imo najlepiej dac to jako jedna opcja
                     for (Stacja s: serwis.getStacje()){
-                        System.out.println(s + ": " + s.getRowery());
+                        System.out.println(s + ": " + s.pobierzDostepneRowery());
                     }
                     break;
                 case 3:
